@@ -1,0 +1,13 @@
+{
+    "Provider": "www.hostinger.com",
+    "Database": "MySQL",
+    "Version" : "8.0",
+    "Options" : {
+        "MYSQLHOST":    "45.84.205.106",
+        "MYSQLPORT":    "3306",
+        "MYSQLUSER":    "u995894309_root",
+        "MYSQLPASS":    "Ferrari12",
+        "MYSQLDBNAME":  "u995894309_web",
+        "MYSQLCHARSET": "utf8mb4"
+    }
+}
