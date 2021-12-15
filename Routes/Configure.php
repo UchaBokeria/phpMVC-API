@@ -3,13 +3,13 @@
     class Configure
     {
         
-        private $Response;
+        public $Response;
 
         public function __construct($CONFIG)
         {
             $CONTENT = file_get_contents("../../Config/" . $CONFIG . ".json");
             $this->Response = json_decode($CONTENT, true);
-            $this->$CONFIG();
+            if(method_exists('Configure', $CONFIG)) $this->$CONFIG();
         }
 
         private function XconfigsX()

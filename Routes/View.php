@@ -1,19 +1,35 @@
 <?php
 
-    class View
+    class View extends AuthGuard
     {
 
         public function __construct($ROUTER)
         {
+
+            parent::__construct();
+            $AuthGuarders = new Configure("AuthGuard");
+            $GUARDS = $AuthGuarders->Response["CustomGuards"][$ROUTER];
+            $OPENKEY = (in_array($_REQUEST["ACTION"], $GUARDS)) ? $this->Authorize() : true;
             
-            include_once "../" . $ROUTER . "/Controller.php";
+            if(!$OPENKEY) {
 
-            $ROUTE    = new $ROUTER();
-            $ACTION   = $_REQUEST["ACTION"];
+                $RESPONSE = [
+                    "error" => true, 
+                    "success" => false, 
+                    "message" => "Authorize error"
+                ];
 
-            $RESPONSE = $ROUTE->$ACTION();
+            } else {
+                
+                include_once "../" . $ROUTER . "/Controller.php";
+    
+                $ROUTE    = new $ROUTER();
+                $ACTION   = $_REQUEST["ACTION"];
+                $RESPONSE = $ROUTE->$ACTION();
+
+            }
+
             echo json_encode($RESPONSE);
-
         }
 
     }

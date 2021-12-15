@@ -1,0 +1,8 @@
+{
+    "useDefaults": false,
+    "DefaultGuardMethods": [ "Create", "Update", "Delete" ],
+    "CustomGuards": {
+        "Help": ["create","read","rot3"]
+     
+    }
+}
