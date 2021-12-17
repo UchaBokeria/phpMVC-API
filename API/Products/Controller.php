@@ -26,6 +26,32 @@
         {
             $activeds = "";
             if($_POST["onlyActiveds"]) $activeds = " AND actived = 1 ";
+            return parent::GET("    SELECT  posts.id,
+                                            posts.created,
+                                            posts.user_id,
+                                            posts.title,
+                                            posts.description,
+                                            post_media.dir,
+                                            CONCAT( '{', 
+                                                GROUP_CONCAT( 
+                                                    post_settings.title, ':' ,post_details.`value`
+                                                ) , '}'
+                                            ) AS details
+
+                                    FROM posts 
+                                    LEFT JOIN post_details ON post_details.post_id = posts.id
+                                    LEFT JOIN post_settings ON post_settings.id = post_details.post_setting_id
+                                    LEFT JOIN post_media ON post_media.id = posts.thumbnail_id
+                                    LEFT JOIN vips ON vips.id = posts.vip_status_id
+                                    WHERE post_details.actived = 1 $activeds
+                                    GROUP BY posts.id
+            ");
+        }
+
+        public function Details()
+        {
+            $activeds = "";
+            if($_POST["onlyActiveds"]) $activeds = " AND actived = 1 ";
             return parent::GET(" SELECT id, question, answer, lang_id FROM help WHERE lang_id = :lang $activeds ;", ["lang" => $_POST["language"]]);
         }
 
