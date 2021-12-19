@@ -25,6 +25,7 @@
         public function Read()
         {
             $activeds = "";
+            echo 12;
             if($_POST["onlyActiveds"]) $activeds = " AND actived = 1 ";
             return parent::GET(" SELECT id, question, answer, lang_id FROM help WHERE lang_id = :lang $activeds ;", ["lang" => $_POST["language"]]);
         }
