@@ -23,7 +23,7 @@
         {
 
             if($MANUAL != true) {
-                $this->host     = MYSQLHOST;
+                $this->host     = MYSQLLOCAL;
                 $this->port     = MYSQLPORT;
                 $this->username = MYSQLUSER;
                 $this->password = MYSQLPASS;

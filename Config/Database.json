@@ -3,6 +3,7 @@
     "Database": "MySQL",
     "Version" : "8.0",
     "Options" : {
+        "MYSQLLOCAL":   "localhost",
         "MYSQLHOST":    "45.84.205.106",
         "MYSQLPORT":    "3306",
         "MYSQLUSER":    "u995894309_root",
