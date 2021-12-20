@@ -11,7 +11,7 @@
 
         public function Create()
         {
-            parent::SET("    INSERT INTO `translate` SET lang_id = :lang_id, lang_key: :lang_key , page_id = :page_id , lang_value = :lang_value ;", 
+            parent::SET("    INSERT INTO `translate` SET lang_id = :lang_id, lang_key = :lang_key , page_id = :page_id , lang_value = :lang_value ;", 
                                     [ "lang_id" => $_POST["language"] ,
                                       "page_id"   => $_POST["page_id"] ,
                                       "lang_key"   => $_POST["lang_key"] ,
@@ -28,18 +28,19 @@
             $activeds = "";
             if($_POST["onlyActiveds"]) $activeds = " AND actived = 1 ";
             return parent::GET(" SELECT id, page_id , lang_id, lang_key, lang_value 
-                                 FROM `translate` WHERE lang_id = :lang AND page_id = :page_id $activeds ;", 
-                                 ["lang" => $_POST["language"], "page_id" => $_POST["page_id"]]);
+                                 FROM `translate` WHERE lang_id = :lang AND page_id IN( :page_id ) $activeds ;", 
+                                 ["lang" => $_POST["language"], "page_id" => explode(',', $_POST["page_id"]) ] );
         }
 
         public function Update()
         {
             return (parent::SET(" UPDATE `translate` SET lang_value = :lang_value  WHERE id = :id;", 
-                                [   "lang_value" => $_POST["lang_value"], 
+                                [   
+                                    "lang_value" => $_POST["lang_value"], 
                                     "id" => $_POST["id"]
                                 ] ) > 0 ) ? 
-                    ['error' => false, 'success' => true, 'message' => $_POST["id"]. ' Record has been deleted; '] : 
-                    ['error' => false, 'success' => false, 'message' => ' Record has NOT been found; '] ;;
+                    ['error' => false, 'success' => true, 'message' => 'Record ' . $_POST["id"]. ' has been updated; '] : 
+                    ['error' => false, 'success' => false, 'message' => ' 0 Records has been updated; '] ;;
         }
 
         public function Delete()
